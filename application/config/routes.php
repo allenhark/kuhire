@@ -59,6 +59,8 @@ $route['legal:any'] = "beta/home/legal";
 $route['suggest'] = "beta/home/suggest_wanted";
 $route['suggest:any'] = "beta/home/suggest_wanted";
 
+$route['automation'] = 'app_v1/automation';
+$route['automation:any'] = 'app_v1/automation';
 
 $route['forgot'] = "beta/home/forgot";
 $route['goodbye'] = "beta/home/goodbye";
