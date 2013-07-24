@@ -6,18 +6,19 @@
         <div class="logo-area">
             <span id="logo"></span>
             <div class="pull-right" style="margin-top: -120px;">
+                <div class="btn-group">
                      <?php if($this->session->userdata('logged_in')):?>
                             
                             <a href="<?= base_url('account?ref=nav+bar'); ?>" class="btn btn-info">My account</a>
-                            <a href="<?= base_url('account/listings?ref=nav+bar'); ?>" class="btn btn-warning">My Listings</a>
-                            <a href="<?= base_url('logout?ref=nav+bar+account'); ?>" class="btn">Logout</a>
+                            <a href="<?= base_url('account/listings?ref=nav+bar'); ?>" class="btn btn-peach">My Listings</a>
+                            <a href="<?= base_url('logout?ref=nav+bar+account'); ?>" class="btn btn-warning">Logout</a>
                             
                             <?php else:?>
-                                <a href="<?= base_url('join/?ref=nav+bar'); ?>" class="btn btn-warning"> Sign Up</a>
-                                <a href="<?= base_url('login?ref=nav+bar'); ?>" class="btn btn-info"> Sign In</a>
+                                <a href="<?= base_url('join/?ref=nav+bar'); ?>" class="btn btn-peach"> Sign Up</a>
+                                <a href="<?= base_url('login?ref=nav+bar'); ?>" class="btn btn-warning"> Sign In</a>
                                 
                             <?php endif;?>
-           
+                </div>
                 <abbr title="Phone" id="call-phone">Call Us : +254 711 295 595</abbr>
             </div>
             

@@ -73,9 +73,9 @@
                                 </div><!-- /.controls -->
                             </div><!-- /.control-group -->
 
-                            <div class="form-actions">
+                            <div class="divider"> &nbsp; </div>
                                 <input type="submit" class="btn btn-primary arrow-right" value="Send">
-                            </div><!-- /.form-actions -->
+                           
                         </form>
                 </div>
 <!--
