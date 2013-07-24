@@ -52,8 +52,6 @@ $route['finalize:any'] = "beta/payments/finalize";
 $route['help'] = "beta/home/help";
 $route['help/:any'] = "beta/home/help";
 $route['contact-us'] = "beta/home/contact_us";
-$route['faqs'] = "beta/home/faqs";
-$route['about-us'] = "beta/home/about_us";
 
 $route['legal'] = "beta/home/legal";
 $route['legal:any'] = "beta/home/legal";
@@ -61,6 +59,8 @@ $route['legal:any'] = "beta/home/legal";
 $route['suggest'] = "beta/home/suggest_wanted";
 $route['suggest:any'] = "beta/home/suggest_wanted";
 
+$route['automation'] = 'app_v1/automation';
+$route['automation:any'] = 'app_v1/automation';
 
 $route['forgot'] = "beta/home/forgot";
 $route['goodbye'] = "beta/home/goodbye";

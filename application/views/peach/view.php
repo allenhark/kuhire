@@ -84,7 +84,36 @@
                                 <li><strong>Price:</strong> <?php if ($row->item_price): echo ' KShs ' . $row->item_price;
     else: echo 'Price: Enquire';
     endif; ?> </li>
+                                <script type="text/javascript">
 
+                                function CopyToClipboard()
+
+                                {
+
+                                document.getElementById('shortlink').focus();
+
+                                //document.getElementById('shortlink').select(); 
+
+                                }
+
+                                </script>
+                                <li><span class="badge badge-warning">Product Code</span> <?=$row->code;?> </li>
+                                <li><span class="badge badge-tertiary">Short link: </span>
+                                    <div class="input-append" style="margin-top: -25px; margin-left: 80px;">
+                                        <?php
+                                            if($row->bitly != ''):
+                                                $bitly = $row->bitly;
+                                            else:
+                                                $bitly = $this->bitly->shorten(base_url(uri_string()));
+                                            endif;
+                                        ?>
+                                        <input class="span6" type="text" onfocus="this.select();" id="shortlink" value="<?=$bitly;?>">
+                                        
+                                        <button class="btn btn-peach" type="button" onClick="CopyToClipboard()"> 
+                                            Copy
+                                        </button>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
 
