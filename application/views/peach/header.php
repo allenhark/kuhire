@@ -9,6 +9,17 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="description" content="">
 		<meta name="author" content="Antony Gitonga">
+                <meta property="og:title" content="<?=$title;?>">
+			<meta property="og:url" content="<?=base_url(uri_string());?>">
+			<meta property="og:site_name" content="Scrobber">
+			<meta property="fb:app_id" content="478729088822838">
+			<meta property="description" content="Kuhire.com - Kenya's number one social hiring platform">
+			
+			<?php if(isset($row)):;?>
+			<meta property="og:image" content="<?=base_url('images/'.$row->image);?>" />
+                        <?php else:?>
+                        <meta property="og:image" content="<?= base_url('peach/img/scrobber-2.png'); ?>" />
+			<?php endif; ?>
 
         <!--[if lte IE 6]>
             <link rel="stylesheet" href="//universal-ie6-css.googlecode.com/files/ie6.1.1.css" media="screen, projection">
@@ -40,7 +51,7 @@
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-34371654-1']);
-  _gaq.push(['_setDomainName', 'www.scrobber.com']);
+  _gaq.push(['_setDomainName', 'www.kuhire.com']);
   _gaq.push(['_setAllowLinker', true]);
   _gaq.push(['_setCampNameKey', 'ref']);
   _gaq.push(['_trackPageview']);
@@ -50,10 +61,28 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-<!-- 
-		wilsons code
--->
 
 </script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-34371654-2', 'kuhire.com');
+  ga('send', 'pageview');
+
+</script>
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=478729088822838";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
 		
 	</head><!--end head-->

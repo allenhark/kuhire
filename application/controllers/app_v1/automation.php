@@ -20,6 +20,21 @@ class Automation extends CI_Controller {
         endif;
     }
     
+    function search ()
+    {
+        $this->db->where('s_term', '');
+        $this->db->or_where('s_term', NULL);
+        $data = $this->db->get('search_log');
+        
+        //Check if run needed
+        if($data->num_rows () != 0):
+            foreach ($data -> result () as $key):
+                $this->db->where('s_id', $key->s_id);
+                $this->db->delete('search_log'); 
+            endforeach;
+        endif;
+    }
+    
     //Start by shortening all urls
     function shorten ()
     {

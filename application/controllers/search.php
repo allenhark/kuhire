@@ -215,7 +215,7 @@ class Search extends CI_Controller {
     }
 
     function log_search() {
-        if ($_GET != NULL):
+        if ($_GET['s'] != NULL):
             $this->db->where('s_session', $this->session->userdata('session_id'));
             $this->db->where('s_user', $this->session->userdata('user_id'));
             $this->db->where('s_term', $_GET['s']);

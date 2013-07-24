@@ -40,10 +40,10 @@
                                        <?= word_limiter($listings->name, 6); ?> 
                                     </p>
                                     <ul class="list-btns">
-                                        <li><a href="<?=base_url($listings->slug.'?ref=view+later');?>" id="property_1" class="add-to-list-js" 
+                                        <!-- li><a href="<?=base_url($listings->slug.'?ref=view+later');?>" id="property_1" class="add-to-list-js" 
                                                data-shortlist="<img src='<?=base_url('images/thumbnails/'.$listings->image);?>' alt='<?=$listings->name;?>'>
                                                <div><a href='<?=base_url($listings->slug."?ref=view+later");?>' id='property_<?=$listings->item_id;?>'><?=$listings->name;?></a><?php if ($listings->item_price): echo $listings->item_price . ' KSH'; else: echo 'Price: Enquire';endif; ?></div>">
-                                                <i class="icon-plus-sign"></i>Short List</a></li>
+                                                <i class="icon-plus-sign"></i>Short List</a></li -->
                                         <li><a href="<?=base_url($listings->slug.'?ref=view+later');?>"><i class="icon-info-sign"></i>View Details</a></li>
                                     </ul>
                                 </div>
@@ -114,20 +114,28 @@
                         </form>
                     </div>
                     
-                    <!-- // MY SHORT LIST // -->
+                    <!-- // MY SHORT LIST // 
                     <div class="qbox">
                         <h3>My Short List <label class="badge badge-important pull-right" id="short-list-count-js">0</label></h3>
                         <div>
                          
                             <p> Add items to your shortlist to view later or for price comparison</p>
-                            <!-- DO NOT DELETE -->
+                            <!-- DO NOT DELETE 
                             <ol id="show-items" class="shortlist"></ol>
-                            <!-- END DO NOT DELETE -->
+                            <!-- END DO NOT DELETE
 
                             <a href="javascript:void(0);" class="link" id="clear-all">Clear List</a>
                         </div>
                     </div>
                     <!--/end my short list-->
+                    
+                    <!-- Facebook -->
+                    <div class="fb-like-box" data-href="https://www.facebook.com/Kuhire" data-width="292" data-show-faces="true" data-stream="false" data-show-border="false" data-header="true"></div>
+
+                <br />
+                <a href="https://twitter.com/kuhire254" class="twitter-follow-button" data-show-count="true" data-lang="en">Follow @Kuhire254</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                <!-- end social stuff -->
                 </div><!--end of span3-->
 
             </div>
