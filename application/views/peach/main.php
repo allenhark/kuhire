@@ -75,6 +75,14 @@
                         
                         
                         <div class="clearfix"></div>
+                        
+                        <div class="pagination pagination-centered align-center">
+                                    
+                                    <ul>
+                                        <?= $this->pagination->create_links(); ?>
+                                       
+                                    </ul>
+                                </div>
 
                     </div>
                 </div><!--end of west pane span9-->
@@ -91,12 +99,12 @@
 								
                             </div>
                             <div>
-                                <label>Select County</label>
-                                <select data-placeholder="-- Select County --" class="chzn-select" style="width:100%;" tabindex="1" name="county">
+                                <label>Select Category</label>
+                                <select data-placeholder="-- Select Category --" class="chzn-select" style="width:100%;" tabindex="1" name="category">
                                     
-                                    <?php foreach ($this->data->counties() -> result () as $county):?>
-                                        <option value="<?=humanize($county->name.'-'.$county->id);?>"><?=humanize($county->name);?></option>
-                                    <?php endforeach;?>
+                                     <?php foreach($this->data->get_categories () -> result () as $cat):?>
+                                        <option value="<?=humanize($cat->cat_id);?>"><?=humanize($cat->cat_name);?></option>
+                                    <?php endforeach;?>                                       
                                     
                                 </select>
                             </div>

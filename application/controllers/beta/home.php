@@ -508,7 +508,13 @@ class Home extends CI_Controller {
             $data['region'] = $_POST['region'];
             $data['country'] = $_POST['country'];
             if (!$edit):
-                $data['slug'] = url_title($_POST['name'], '-', TRUE) . '-' . random_string('alpha', 4);
+                $slug = url_title($_POST['name'], '-', TRUE) . '-' . random_string('alpha', 4);
+                $url = base_url($slug);
+                $data['slug'] = $slug;
+                $data['bitly'] = $this->bitly->shorten($url);
+                //Product Code
+                $code = random_string('nozero', 6);
+                $data['code'] = $code;
             endif;
             $data['name'] = $_POST['name'];
 

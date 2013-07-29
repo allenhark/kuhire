@@ -59,7 +59,7 @@
                         <div class="property-info">
     <?php if ($this->session->userdata('logged_in')): if ($this->session->userdata('user_id') == $row->item_owner): ?>
                                     <a href="<?= base_url('add?src=edit&item=' . $row->slug . '&auth=' . md5(random_string('alnum', 8))); ?>" />
-                                    <h3 class="btn btn-warning"> Edit </h3> 
+                                    <h3 class="btn btn-peach"> Edit </h3> 
                                     </a>
 
                                     <a href="<?= base_url('add?action=delete&item=' . $row->slug . '&auth=' . md5(random_string('alnum', 8))); ?>" />
@@ -97,7 +97,7 @@
                                 }
 
                                 </script>
-                                <li><span class="badge badge-warning">Product Code</span> <?=$row->code;?> </li>
+                                <li><span class="badge badge-peach">Product Code</span> <?=$row->code;?> </li>
                                 <li><span class="badge badge-tertiary">Short link: </span>
                                     <div class="input-append" style="margin-top: -25px; margin-left: 80px;">
                                         <?php

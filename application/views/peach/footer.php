@@ -81,9 +81,8 @@
                 </span>
 
                 <ul class="span3 social-network">
-                    <li><a href="http://www.twitter.com/Scrobber"><i class="icon-twitter-sign"></i></a></li>
-                    <li><a href="http://www.facebook.com/Scrobber"><i class="icon-facebook-sign"></i></a></li>
-                    <li><a href="https://plus.google.com/110247148871971809411"><i class="icon-google-plus-sign"></i></a></li>
+                    <li><a href="http://www.twitter.com/Kuhire"><i class="icon-twitter-sign"></i></a></li>
+                    <li><a href="http://www.facebook.com/Kuhire254"><i class="icon-facebook-sign"></i></a></li>
                 </ul>
 
             </div>

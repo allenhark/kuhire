@@ -9,13 +9,13 @@
                 <div class="btn-group">
                      <?php if($this->session->userdata('logged_in')):?>
                             
-                            <a href="<?= base_url('account?ref=nav+bar'); ?>" class="btn btn-info">My account</a>
-                            <a href="<?= base_url('account/listings?ref=nav+bar'); ?>" class="btn btn-peach">My Listings</a>
-                            <a href="<?= base_url('logout?ref=nav+bar+account'); ?>" class="btn btn-warning">Logout</a>
+                            <a href="<?= base_url('account?ref=nav+bar'); ?>" class="btn btn-peach">My account</a>
+                            
+                            <a href="<?= base_url('logout?ref=nav+bar+account'); ?>" class="btn btn-inverse">Logout</a>
                             
                             <?php else:?>
                                 <a href="<?= base_url('join/?ref=nav+bar'); ?>" class="btn btn-peach"> Sign Up</a>
-                                <a href="<?= base_url('login?ref=nav+bar'); ?>" class="btn btn-warning"> Sign In</a>
+                                <a href="<?= base_url('login?ref=nav+bar'); ?>" class="btn btn-inverse"> Sign In</a>
                                 
                             <?php endif;?>
                 </div>

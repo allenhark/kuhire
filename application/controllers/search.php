@@ -13,7 +13,7 @@ class Search extends CI_Controller {
             else:
 
                 $data['main'] = 'search';
-                $data['title'] = 'Search -'.$_GET['s'].' | Scrobber';
+                $data['title'] = 'Search -'.$_GET['s'].' | Kuhire';
                 
                 $data['keywords'] = '';
                 $data['description'] = '';
@@ -111,7 +111,6 @@ class Search extends CI_Controller {
         $this->db->like('desc', $_GET['s']);
         $this->db->or_like('name', $_GET['s']);
         $this->db->or_like('tags', $_GET['s']);
-        $this->db->where('status', 3);
         
         //Filter
         if(isset($_GET['filter'])):
@@ -126,11 +125,13 @@ class Search extends CI_Controller {
         //Category filter
         
         if(isset($_GET['category'])):
-            $slug = $_GET['slug'];
             
-                $this->db->where('item_cat', $slug);
-            
+                $this->db->where('item_cat', 4);
+                
         endif;
+        
+        
+        $this->db->where('status', 3);
         
         
         if (isset($_GET['page'])):
@@ -140,7 +141,9 @@ class Search extends CI_Controller {
         endif;
 
         $rt = $this->db->get('item');
+        
         $this->log_search();
+        
         return $rt;
     }
     
@@ -164,7 +167,7 @@ class Search extends CI_Controller {
         //Category filter
         
         if(isset($_GET['category'])):
-            $slug = $_GET['slug'];
+            $slug = $_GET['category'];
             
                 $this->db->where('item_cat', $slug);
             
