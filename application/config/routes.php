@@ -93,6 +93,9 @@ $route['hire:any'] = "beta/home/hire";
 
 $route['max'] = "max";
 
+$route['site'] = 'cms';
+$route['site/:any'] = 'cms';
+
 $route['user/:any'] = "beta/home/user";
 $route['agency/:any'] = "beta/home/user";
 $route['company/:any'] = "beta/home/user";

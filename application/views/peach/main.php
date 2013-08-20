@@ -111,8 +111,8 @@
                             <div>
                                 <label>Select a locality</label>
                                 <select  data-placeholder="-- Available Locales --" multiple="multiple" class="chzn-select" style="width:100%;" name="locality" tabindex="2">
-                                    <?php foreach($this->data->locales () -> result () as $locs):?>
-                                        <option value="<?=humanize($locs->name.'-'.$county->id);?>"><?=humanize($locs->name);?></option>
+                                   <?php foreach($this->data->locales () -> result () as $locs):?>
+                                        <option value="<?=humanize($locs->name);?>"><?=humanize($locs->name);?></option>
                                     <?php endforeach;?>
                                                                 
                                 </select>

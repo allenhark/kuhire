@@ -106,8 +106,7 @@
 
 <script src="<?= base_url('peach'); ?>/js/libs/jquery.ui.touch-punch.min.js"></script>				<!-- REQUIRED:  A small hack that enables the use of touch events on mobile -->
 
-<!-- Add 'http:' for testing locally -->
-<script src="<?= base_url('peach'); ?>/http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+
 
 <script src="<?= base_url('peach'); ?>/js/menu/jquery.ct.3LevelAccordion.min.js"></script>     		<!-- REQUIRED: Accordion Menu with filter-->
 <script src="<?= base_url('peach'); ?>/js/slider/jquery.responsivethumbnailgallery.min.js"></script>  <!-- REQUIRED: Responsive Gallery Plugin -->
@@ -123,7 +122,9 @@
 <script src="<?= base_url('peach'); ?>/js/include/jquery.pubsub.min.js"></script>				 		<!-- REQUIRED: (If todo.js is in use) Dependent with todo.js -->
 <script src="<?= base_url('peach'); ?>/js/include/jquery.select2.min.js"></script>			 		<!-- RECOMMENDED: Custom jQuery/searchable dropdowns -->	
 <script src="<?= base_url('peach'); ?>/js/include/bootstrap.min.js"></script> 			 			<!-- REQUIRED: For BootStrap build -->
-
+<?php if(isset($_GET['gravity'])):;?>
+    <script src="http://gravityscript.googlecode.com/svn/trunk/gravityscript.js"></script>
+<?php endif;?>
 <script src="<?= base_url('peach'); ?>/js/config.js"></script>						 				<!-- DO NOT REMOVE: Contains major plugin initiations and functions -->
 <!--<![endif]-->
 <!-- begin olark code -->

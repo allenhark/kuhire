@@ -68,7 +68,7 @@
 
                         <form class="navbar-form pull-right" action="<?= base_url('search'); ?>" method="get" style="overflow:auto;">
                             <div class="input-append">
-                                <input class="span2" id="appendedInputButton" type="text" name="s" x-webkit-speech="x-webkit-speech" placeholder="Search here...">
+                                <input class="span2" id="appendedInputButton" type="text" value="<?php if(isset($_GET['s'])): echo $_GET['s']; endif;?>" name="s" x-webkit-speech="x-webkit-speech" placeholder="Search here...">
                                 <input type="hidden" value="nav search" name="ref" />
                                 <button class="btn btn-peach" type="button"> 
                                     Search

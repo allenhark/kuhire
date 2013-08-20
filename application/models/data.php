@@ -18,6 +18,63 @@ class Data extends CI_Model {
          */
     }
     
+    function faq_count ()
+    {
+        $this->db->where('faq_status', 1);
+        $result = $this->db->get('faq');
+        
+        $count = $result->num_rows ();
+        
+        //Return count of all faqs
+        return $count;
+    }
+    
+    //GEt faqs script
+    function get_faqs ()
+    {
+        $config['base_url'] = base_url('site/faq?');
+        $config['total_rows'] = $this->faq_count();
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_link'] = 'First';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['last_link'] = 'Last';
+        $config['next_tag_open'] = '<li class="paginate_enabled_next">';
+        $config['next_tag_close'] = '</li>';
+        $config['num_tag_open'] = '<li class="paginate_button">';
+        $config['num_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li class="paginate_enabled_previous">';
+        $config['prev_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active paginate_active"> <a href="#" >';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['enable_query_strings'] = TRUE;
+        $config['page_query_string'] = TRUE;
+        $config['query_string_segment'] = 'page';
+        $config['num_links'] = 5;
+
+
+        $config['per_page'] = 10;
+        
+        $this->pagination->initialize($config);
+        
+        $this->db->where('faq_status', 1);
+        $this->db->order_by('faq_id', 'DESC');
+        
+        if (isset($_GET['page'])):
+            $this->db->limit(10, $_GET['page']);
+        else:
+            $this->db->limit(10, 0);
+        endif;
+        
+        
+        $faqs = $this->db->get('faq');
+        
+        //Return final araay
+        return $faqs; 
+    }
+
+
     function delete ()
     {
         //Process delete action here

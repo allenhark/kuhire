@@ -13,11 +13,11 @@
                                 <p>We got <?=$count;?> results.</p>
                             </div>
                             <div class="span5">
-                                <select id="sort" name="sort">
+                                <!-- select id="sort" name="sort">
                                     <option value="pmrank">Sort by Popularity</option>
                                     <option value="price">Sort by Price: Low to High</option>
                                     <option value="-price">Sort by Price: High to Low</option>
-                                </select>
+                                </select -->
                             </div>
                         </div>
                     </div>
@@ -106,16 +106,16 @@
                        <form action="<?=base_url('search');?>">
                             <div>
                                 <label>What are you looking for?</label>
-                                <input type="text" name="s" x-webkit-speech="x-webkit-speech" style="width:95%;" >
+                                <input type="text" name="s" x-webkit-speech="x-webkit-speech" style="width:95%;" value="<?php if(isset($_GET['s'])): echo $_GET['s']; endif;?>">
 								
                             </div>
                             <div>
-                                <label>Select County</label>
-                                <select data-placeholder="-- Select County --" class="chzn-select" style="width:100%;" tabindex="1" name="county">
+                                <label>Select Category</label>
+                                <select data-placeholder="-- Select Category --" class="chzn-select" style="width:100%;" tabindex="1" name="category">
                                     
-                                    <?php foreach ($this->data->counties() -> result () as $county):?>
-                                        <option value="<?=humanize($county->name.'-'.$county->id);?>"><?=humanize($county->name);?></option>
-                                    <?php endforeach;?>
+                                     <?php foreach($this->data->get_categories () -> result () as $cat):?>
+                                        <option value="<?=humanize($cat->cat_id);?>"><?=humanize($cat->cat_name);?></option>
+                                    <?php endforeach;?>                                       
                                     
                                 </select>
                             </div>
@@ -123,7 +123,7 @@
                                 <label>Select a locality</label>
                                 <select  data-placeholder="-- Available Locales --" multiple="multiple" class="chzn-select" style="width:100%;" name="locality" tabindex="2">
                                     <?php foreach($this->data->locales () -> result () as $locs):?>
-                                        <option value="<?=humanize($locs->name.'-'.$county->id);?>"><?=humanize($locs->name);?></option>
+                                        <option value="<?=humanize($locs->name);?>"><?=humanize($locs->name);?></option>
                                     <?php endforeach;?>
                                                                 
                                 </select>
