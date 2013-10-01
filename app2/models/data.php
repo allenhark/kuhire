@@ -6,32 +6,30 @@
  */
 
 class Data extends CI_Model {
-    
+
     function __construct() {
         parent::__construct();
-        
+
         /*
-        if(!$this->session->userdata('active_location')):
-            $this->get_location ();
-        endif;
+          if(!$this->session->userdata('active_location')):
+          $this->get_location ();
+          endif;
          * 
          */
     }
-    
-    function faq_count ()
-    {
+
+    function faq_count() {
         $this->db->where('faq_status', 1);
         $result = $this->db->get('faq');
-        
-        $count = $result->num_rows ();
-        
+
+        $count = $result->num_rows();
+
         //Return count of all faqs
         return $count;
     }
-    
+
     //GEt faqs script
-    function get_faqs ()
-    {
+    function get_faqs() {
         $config['base_url'] = base_url('site/faq?');
         $config['total_rows'] = $this->faq_count();
         $config['first_tag_open'] = '<li>';
@@ -55,61 +53,58 @@ class Data extends CI_Model {
 
 
         $config['per_page'] = 10;
-        
+
         $this->pagination->initialize($config);
-        
+
         $this->db->where('faq_status', 1);
         $this->db->order_by('faq_id', 'DESC');
-        
+
         if (isset($_GET['page'])):
             $this->db->limit(10, $_GET['page']);
         else:
             $this->db->limit(10, 0);
         endif;
-        
-        
+
+
         $faqs = $this->db->get('faq');
-        
+
         //Return final araay
-        return $faqs; 
+        return $faqs;
     }
 
-
-    function delete ()
-    {
+    function delete() {
         //Process delete action here
         echo '... deleting ...';
         $user = $this->session->userdata('user_id');
         $slug = $_GET['item'];
-        
+
         //Get item info before delete
         $this->db->where('slug', $slug);
         $this->db->where('item_owner', $user);
-        
-        $info = $this->db->get('item')->result ();
-        
-        foreach ($info as $key);
-        
+
+        $info = $this->db->get('item')->result();
+
+        foreach ($info as $key)
+            ;
+
         //Delete Images
-       // echo $key->image;
-        unlink('./images/'.$key->image);
-        unlink('./images/thumbnails/'.$key->image);
-        
+        // echo $key->image;
+        unlink('./images/' . $key->image);
+        unlink('./images/thumbnails/' . $key->image);
+
         //Delete from database
         $this->db->where('item_id', $key->item_id);
         $rm = $this->db->delete('item');
-        
+
         //test
-        
+
         redirect(base_url('account/listings/?deleted=true'));
-        
+
         flush();
-        
     }
-    
-    function homepage ()
-    {
-         $config['base_url'] = base_url('?browse=true&');
+
+    function homepage() {
+        $config['base_url'] = base_url('?browse=true&');
         $config['total_rows'] = $this->count();
         $config['first_tag_open'] = '<li>';
         $config['first_tag_close'] = '</li>';
@@ -132,13 +127,13 @@ class Data extends CI_Model {
 
 
         $config['per_page'] = 5;
-        
+
         $this->pagination->initialize($config);
-        
+
         $this->db->where_not_in('image', 'default.png');
         $this->db->where('status', 3);
         $this->db->order_by('item_id', 'DESC');
-        
+
         if (isset($_GET['page'])):
             $this->db->limit(5, $_GET['page']);
         else:
@@ -146,46 +141,40 @@ class Data extends CI_Model {
         endif;
 
         $rt = $this->db->get('item');
-        
+
         return $rt;
     }
-    
-    function count ()
-    {
+
+    function count() {
         $this->db->where_not_in('image', 'default.png');
         $this->db->where('status', 3);
         $this->db->order_by('item_id', 'desc');
-        
-        return $this->db->get('item') -> num_rows ();
+
+        return $this->db->get('item')->num_rows();
     }
 
-
-    function get_item_by_slug ()
-    {
+    function get_item_by_slug() {
         $this->db->where('slug', $_GET['item']);
         $this->db->where('item_owner', $this->session->userdata('user_id'));
-        
+
         $data = $this->db->get('item');
-        
+
         return $data;
-        
-        
     }
-    
-    function generic_category($slug)
-    {
-        $query = 'select * from categories where cat_slug="'.$slug.'"';
+
+    function generic_category($slug) {
+        $query = 'select * from categories where cat_slug="' . $slug . '"';
         //$this->db->where('cat_slug', $slug);
-        
+
         $data = $this->db->get($query);
-        
-        foreach ($data -> result () as $d);
-        
+
+        foreach ($data->result() as $d)
+            ;
+
         return $d->cat_id;
     }
-    
-    function drag_map ()
-    {
+
+    function drag_map() {
         $config['center'] = 'auto';
         $config['zoom'] = 'auto';
         $this->googlemaps->initialize($config);
@@ -193,23 +182,33 @@ class Data extends CI_Model {
         $marker = array();
         $marker['position'] = 'auto';
         $marker['draggable'] = true;
-            //$marker['ondragend'] = 'alert(\'You just dropped me at: \' + event.latLng.lat() + \', \' + event.latLng.lng());';
+        //$marker['ondragend'] = 'alert(\'You just dropped me at: \' + event.latLng.lat() + \', \' + event.latLng.lng());';
         $this->googlemaps->add_marker($marker);
-        
     }
 
-    function get_categories ()
-    {
+    function ads() {
+        $this->db->order_by('ad_id', 'random');
+        $data = $this->db->get('ads');
+
+        return $data;
+    }
+
+    function get_categories() {
         $this->db->order_by('cat_name', "ASC");
         $data = $this->db->get('categories');
         return $data;
     }
-    
-    function map_single ($lat, $long)
-    {
-        if($lat != NULL & $lat != 0):
-            
-            $config['center'] = $lat. ', '.$long;
+
+    function get_categories_home() {
+        $this->db->order_by('cat_name', "ASC");
+        $data = $this->db->get('categories');
+        return $data;
+    }
+
+    function map_single($lat, $long) {
+        if ($lat != NULL & $lat != 0):
+
+            $config['center'] = $lat . ', ' . $long;
             $config['zoom'] = '14';
             $config['map_height'] = '150px';
             //$config['cluster'] = TRUE;
@@ -218,158 +217,148 @@ class Data extends CI_Model {
 
             //$marker = array();                
 
-                    $marker = array();
+            $marker = array();
 
-                        $marker['position'] = $lat.', '.$long;
-                        $marker['icon'] = base_url().'realia/assets/img/markers/marker-turquiose.png';
+            $marker['position'] = $lat . ', ' . $long;
+            $marker['icon'] = base_url() . 'realia/assets/img/markers/marker-turquiose.png';
 
-                        $this->googlemaps->add_marker($marker);
-             $data = $this->googlemaps->create_map();
+            $this->googlemaps->add_marker($marker);
+            $data = $this->googlemaps->create_map();
 
             return $data;
 
         else:
-            $config['center'] = $this->session->userdata('ip_latitude'). ', '.$this->session->userdata('ip_longitude');
+            $config['center'] = $this->session->userdata('ip_latitude') . ', ' . $this->session->userdata('ip_longitude');
             $config['zoom'] = '14';
             $config['map_height'] = '150px';
-            
+
             //$config['cluster'] = TRUE;
             $config['pixelOffset'] = '-146, -190)';
             $this->googlemaps->initialize($config);
-            
+
             $data = $this->googlemaps->create_map();
 
             return $data;
         endif;
     }
-    
-    function map_data ()
-    {
-       //print_r($this->session->userdata('ip_latitude'). ', '.$this->session->userdata('ip_longitude'));
-        $config['center'] = $this->session->userdata('ip_latitude'). ', '.$this->session->userdata('ip_longitude');
+
+    function map_data() {
+        //print_r($this->session->userdata('ip_latitude'). ', '.$this->session->userdata('ip_longitude'));
+        $config['center'] = $this->session->userdata('ip_latitude') . ', ' . $this->session->userdata('ip_longitude');
         $config['zoom'] = '14';
         $config['map_height'] = '480px';
         //$config['cluster'] = TRUE;
         $config['pixelOffset'] = '-146, -190)';
         $this->googlemaps->initialize($config);
-        
+
         //$marker = array();                
-                
-                $marker = array();
-                
-                foreach ($this->latest_10() -> result () as $md):
-                    $marker['position'] = $md->lat.', '.$md->long;
-                    $marker['infowindow_content'] =  '<div class="infobox" style="min-width: 180px; min-height: 220px;"><div class="image"><img src="'.base_url('images/thumbnails/' . $md->image).'" alt="'.$md->name . '" for hire in "' . $md->region .' " width="160px"><div class="clearfix"> </div> </div><div class="title"><a href="'.base_url($md->slug).'">'.$md->name.'</a></div><div class="price">'.$md->item_price.'</div><div class="link"><a href="'.base_url($md->slug).'">View listing</a></div></div>';
-                    $marker['icon'] = base_url().'realia/assets/img/markers/marker-turquiose.png';
 
-                    $this->googlemaps->add_marker($marker);
-                endforeach;
-               
+        $marker = array();
+
+        foreach ($this->latest_10()->result() as $md):
+            $marker['position'] = $md->lat . ', ' . $md->long;
+            $marker['infowindow_content'] = '<div class="infobox" style="min-width: 180px; min-height: 220px;"><div class="image"><img src="' . base_url('images/thumbnails/' . $md->image) . '" alt="' . $md->name . '" for hire in "' . $md->region . ' " width="160px"><div class="clearfix"> </div> </div><div class="title"><a href="' . base_url($md->slug) . '">' . $md->name . '</a></div><div class="price">' . $md->item_price . '</div><div class="link"><a href="' . base_url($md->slug) . '">View listing</a></div></div>';
+            $marker['icon'] = base_url() . 'realia/assets/img/markers/marker-turquiose.png';
+
+            $this->googlemaps->add_marker($marker);
+        endforeach;
 
 
-       // $this->googlemaps->add_marker($marker);
+
+        // $this->googlemaps->add_marker($marker);
 
         $data = $this->googlemaps->create_map();
-        
+
         return $data;
     }
-    
-    function latest_6 ()
-    {
+
+    function latest_6() {
         ////$region = $this->session->userdata('ip_region');
         //////$country = $this->session->userdata('ip_country');
-        
+
         $this->db->where('status', 3);
         //$this->db->where('featured', 1);
         //$this->db->where('region', $region);
         ////$this->db->where('country', $country);;
         $this->db->order_by('item_id', 'random');
         $this->db->limit(5);
-        
+
         $data = $this->db->get('item');
-        
+
         return $data;
     }
-    
-    function latest_4 ()
-    {
+
+    function latest_4() {
         ////$region = $this->session->userdata('ip_region');
         //1////$country = $this->session->userdata('ip_country');
-        
+
         $this->db->where('status', 3);
-       // $this->db->where('region', $region);
-       // //$this->db->where('country', $country);;
+        // $this->db->where('region', $region);
+        // //$this->db->where('country', $country);;
         $this->db->order_by('item_id', 'random');
         $this->db->limit(3);
-        
+
         $data = $this->db->get('item');
-        
+
         return $data;
     }
-    
-    function latest_3 ()
-    {
+
+    function latest_3() {
         //$region = $this->session->userdata('ip_region');
         ////$country = $this->session->userdata('ip_country');
-        
+
         $this->db->where('status', 3);
         //$this->db->where('region', $region);
         //$this->db->where('country', $country);;
         $this->db->order_by('item_id', 'desc');
         $this->db->limit(2);
-        
+
         $data = $this->db->get('item');
-        
+
         return $data;
     }
-    
-    function latest_10 ()
-    {
+
+    function latest_10() {
         //$region = $this->session->userdata('ip_region');
         ////$country = $this->session->userdata('ip_country');
-        
+
         $this->db->where('status', 3);
         //$this->db->where('region', $region);
         //$this->db->where('country', $country);;
         $this->db->order_by('item_id', 'random');
         $this->db->limit(10);
-        
+
         $data = $this->db->get('item');
-        
-        return $data;
-    }
-    
-    function counties()
-    {
-        $this->db->order_by('name', 'asc');
-        $data = $this->db->get('counties');
-        
-        return $data;
-    }
-    
-    function locales ()
-    {
-        $this->db->order_by('name', 'asc');
-        $data = $this->db->get('constituencies');
-        
+
         return $data;
     }
 
-    
-    function get_location ()
-    {
+    function counties() {
+        $this->db->order_by('name', 'asc');
+        $data = $this->db->get('counties');
+
+        return $data;
+    }
+
+    function locales() {
+        $this->db->order_by('name', 'asc');
+        $data = $this->db->get('constituencies');
+
+        return $data;
+    }
+
+    function get_location() {
         $ipLite = $this->ip2location;
         $ipLite->setKey('e78ef066c1a1c231e6ad1e12db3babe7c38f77be480a4b59295c1113ac5433a2');
 
         //Get errors and locations
         $locations = $ipLite->getCity($this->getip());
-        
-        //print_r($locations);
 
+        //print_r($locations);
         //Getting the result
-        
-        if(!$this->session->userdata('active_location')):
-            
+
+        if (!$this->session->userdata('active_location')):
+
             $sess['active_location'] = TRUE;
             $sess['ip_city'] = humanize($locations['cityName']);
             $sess['ip_country_code'] = $locations['countryCode'];
@@ -377,145 +366,164 @@ class Data extends CI_Model {
             $sess['ip_region'] = humanize($locations['cityName']);
             $sess['ip_latitude'] = $locations['latitude'];
             $sess['ip_longitude'] = $locations['longitude'];
-            
-            $this->session->set_userdata($sess);
-            
-            return true;
-            
-        endif;
-        
-        
-        
-        
-    }
-	
-	function getip()
-{
-    if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
-    {
-      $ip=$_SERVER['HTTP_CLIENT_IP'];
-    }
-    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
-    {
-      $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
-    }
-    else
-    {
-      $ip=$_SERVER['REMOTE_ADDR'];
-    }
-    return $ip;
-}
-    
-    function create_thumbnail ($file_name, $file_path)
-    {
-        require_once APPPATH.'libraries/thumb/ThumbLib.inc.php'; 
-              
-       $thumb = PhpThumbFactory::create($file_path);
-            //$thumb = PhpThumbFactory::create('test.jpg');
-       $thumb->resize(221, 147)->save('./images/thumbnails/'.$file_name);
-           
-       return true;
-    }
-    
-   function thumbnailer ()
-    {
-       
-       $map = directory_map('./images/', TRUE, FALSE);
-       
-       //echo '<pre>';
-      // print_r($map);
-       
-       foreach ($map as $key):       
-           
-          $file_path = './images/'.$key;
-           require_once APPPATH.'libraries/thumb/ThumbLib.inc.php'; 
-           
-           
-           $thumb = PhpThumbFactory::create($file_path);
-                //$thumb = PhpThumbFactory::create('test.jpg');
-           
-           //For thumbnails
-           $thumb->resize(221, 147)->save('./images/thumbnails/'.$key);
-           
-           //for slider
-           //$thumb->resize(940, 340)->save('./images/slider/'.$key);
 
-          // return true;
-         
-      
-        endforeach;
+            $this->session->set_userdata($sess);
+
+            return true;
+
+        endif;
     }
-    
-    
-    function home_main_category($id)
-    {
+
+    function getip() {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {   //check ip from share internet
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
+    }
+
+    function create_thumbnail($file_name, $file_path) {
+        require_once APPPATH . 'libraries/thumb/ThumbLib.inc.php';
+
+        $thumb = PhpThumbFactory::create($file_path);
+        //$thumb = PhpThumbFactory::create('test.jpg');
+        $thumb->resize(221, 147)->save('./images/thumbnails/' . $file_name);
+
+        return true;
+    }
+
+    function thumbnailer() {
+        $dir = './images/';
+
+        $files2 = scandir($dir, 1);
+        echo "<pre>";
+        foreach ($files2 as $key):
+            if ($key === '..' | $key === '.'):
+                continue;
+            else:
+                //check if thumb exists
+                $thumbcheck = base_url() . 'images/thumbnails/' . $key;
+                if (file_exists($thumbcheck)):
+                    continue;
+                else:
+                    
+                    $file_path = './images/'.$key;
+                    require_once APPPATH . 'libraries/thumb/ThumbLib.inc.php';
+
+
+                    $thumb = PhpThumbFactory::create($file_path);
+                //$thumb = PhpThumbFactory::create('test.jpg');
+                //For thumbnails
+                    $thumb->resize(221, 147)->save('./images/thumbnails/' . $key);
+                //for slider
+                //$thumb->resize(940, 340)->save('./images/slider/'.$key);
+                continue;
+
+                endif;
+            endif;
+        endforeach;
+
+        // print_r($files2);
+
+        exit();
+        /*
+          $map = directory_map('./images/', 1);
+
+          echo '<pre>';
+          print_r($map);
+
+          foreach ($map as $key):
+
+          $file_path = './images/' . $key;
+
+          //Check for file existence
+          $thumbcheck = base_url().'images/thumbnails/' . $key;
+          if (file_exists($thumbcheck)):
+          continue;
+          else:
+          require_once APPPATH . 'libraries/thumb/ThumbLib.inc.php';
+
+
+          $thumb = PhpThumbFactory::create($file_path);
+          //$thumb = PhpThumbFactory::create('test.jpg');
+          //For thumbnails
+          //  $thumb->resize(221, 147)->save('./images/thumbnails/' . $key);
+
+          //for slider
+          //$thumb->resize(940, 340)->save('./images/slider/'.$key);
+          // return true;
+          endif;
+
+          endforeach;
+         * 
+         */
+    }
+
+    function home_main_category($id) {
         $this->db->where('item_cat', $id);
         $this->db->where('status', 3);
         $this->db->where('featured', 1);
         $this->db->order_by('item_id', 'random');
-        $data = $this->db->get('item')->result ();
-        
-        foreach ($data as $d);
-        
+        $data = $this->db->get('item')->result();
+
+        foreach ($data as $d)
+            ;
+
         return $d;
     }
-    
-    
-    function tools ()
-    {
+
+    function tools() {
         $this->db->where('cat_id', 2);
         $this->db->order_by('sub_cat_id', 'random');
         $this->db->limit(15);
-        
+
         $data = $this->db->get('sub_categories');
-        
+
         return $data;
     }
-    
-    function events ()
-    {
+
+    function events() {
         $this->db->where('cat_id', 4);
         $this->db->order_by('sub_cat_id', 'random');
         $this->db->limit(15);
-        
+
         $data = $this->db->get('sub_categories');
-        
+
         return $data;
     }
-    
-    function get_sub_cats($id)
-    {
+
+    function get_sub_cats($id) {
         $this->db->where('cat_id', $id);
         $this->db->order_by('sub_cat_id', 'random');
         $this->db->limit(15);
-        
+
         $data = $this->db->get('sub_categories');
-        
+
         return $data;
     }
 
-    function front_page_ad ()
-    {
+    function front_page_ad() {
         $this->db->where('active', 1);
         $this->db->order_by('ad_id', "random");
         $data = $this->db->get('home_ads');
-        
-        foreach ($data -> result () as $key):
+
+        foreach ($data->result() as $key):
             return $key->html;
         endforeach;
     }
-    
-    function get_sub_cat ($sub)
-    {
-        $d = $sub; 
-        
+
+    function get_sub_cat($sub) {
+        $d = $sub;
+
         $this->db->where('cat_id', $d);
         $this->db->order_by('sub_cat_name', 'ASC');
         $data = $this->db->get('sub_categories');
-        
+
         return $data;
     }
-
 
     function suggested() {
 
@@ -540,11 +548,12 @@ class Data extends CI_Model {
         $this->db->limit(1);
 
         $data = $this->db->get('item');
-        
-        if($data->num_rows () !== 0):
-        foreach ($data->result() as $ft);
 
-        return $ft;
+        if ($data->num_rows() !== 0):
+            foreach ($data->result() as $ft)
+                ;
+
+            return $ft;
         else:
             return false;
         endif;
@@ -649,15 +658,59 @@ class Data extends CI_Model {
         return true;
     }
 
-    function get_cat_data() {
-        $cdata = $this->get_cat();
+    function get_cat_data($cat_id) {
+        //Pagination first
+        $config['base_url'] = base_url($this->uri->segment(1) . '?');
+        $config['total_rows'] = $this->get_cat_data_count($cat_id);
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_link'] = 'First';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['last_link'] = 'Last';
+        $config['next_tag_open'] = '<li class="paginate_enabled_next">';
+        $config['next_tag_close'] = '</li>';
+        $config['num_tag_open'] = '<li class="paginate_button">';
+        $config['num_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li class="paginate_enabled_previous">';
+        $config['prev_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active paginate_active"> <a href="#" >';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['enable_query_strings'] = TRUE;
+        $config['page_query_string'] = TRUE;
+        $config['query_string_segment'] = 'page';
+        $config['num_links'] = 5;
+
+
+        $config['per_page'] = 5;
+
+        $this->pagination->initialize($config);
+
         $this->db->where('status', 3);
         $this->db->order_by('item_id', 'desc');
-        $this->db->where('item_cat', $cdata->cat_id);
+        $this->db->where('item_cat', $cat_id);
+        if (isset($_GET['page'])):
+            $this->db->limit(5, $_GET['page']);
+        else:
+            $this->db->limit(5, 0);
+        endif;
 
         $data = $this->db->get('item');
 
         return $data;
+    }
+
+    function get_cat_data_count($cat_id) {
+        //Pagination first
+
+
+        $this->db->where('status', 3);
+        $this->db->order_by('item_id', 'desc');
+        $this->db->where('item_cat', $cat_id);
+
+        $data = $this->db->get('item');
+
+        return $data->num_rows();
     }
 
     function get_page() {
@@ -849,27 +902,26 @@ class Data extends CI_Model {
 
         return $hood;
     }
-    
-    function send_email ($email, $subject, $msg, $to, $return)
-    {
-        
+
+    function send_email($email, $subject, $msg, $to, $return) {
+
         $config['protocol'] = 'sendmail';
-        $config['smtp_host'] = '54.235.155.5';
+        $config['smtp_host'] = '54.221.194.111';
         $config['charset'] = 'iso-8859-1';
         $config['wordwrap'] = TRUE;
         $config['smtp_user'] = "swift.scrobber";
         $config['port'] = '25';
         $config['pass'] = 'swiftmailer!';
-        
+
         $this->email->initialize($config);
-        
+
         $this->email->to($to);
         $this->email->from($email);
         $this->email->subject($subject);
         $this->email->message($msg);
         $this->email->send();
-        
-        if($return != null):
+
+        if ($return != null):
             redirect($return);
         else:
             return true;

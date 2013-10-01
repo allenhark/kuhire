@@ -25,6 +25,8 @@
                                 Listing edited
                             </div>
                         <?php endif; ?>
+                        
+                        
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -97,7 +99,8 @@
                                 }
 
                                 </script>
-                                <li><span class="badge badge-peach">Product Code</span> <?=$row->code;?> </li>
+                                <li><h3> <span class="badge badge-peach"><i class="icon-phone"></i> Phone</span> <?=$row->phone;?> </h3></li>
+                                 <li><span class="badge badge-peach">Product Code</span> <?=$row->code;?> </li>
                                 <li><span class="badge badge-tertiary">Short link: </span>
                                     <div class="input-append" style="margin-top: -25px; margin-left: 80px;">
                                         <?php

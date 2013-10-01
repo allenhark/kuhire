@@ -93,6 +93,10 @@ $route['cron'] = 'cron';
 $route['app'] = 'app';
 $route['app/:any'] = 'app';
 
+//Olx mapper
+$route['olx'] = 'app_v1/olx';
+$route['linking'] = 'app_v1/olx/links';
+
 $route['landing'] = 'main/landing';
 
 $route['account'] = "account";
@@ -187,7 +191,7 @@ $route['location'] = 's/location';
 
 /* Items Controller */
 
-$route[':any'] = "beta/home/view/$1";
+$route[':any'] = "app";
 
 
 $route['404_override'] = 'error/index';

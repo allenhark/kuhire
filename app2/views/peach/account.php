@@ -42,6 +42,9 @@
                                         <li><a href="<?=base_url('add?src=edit&item='.$listing->slug.'&auth='.md5(random_string('alnum', 8)));?>"><i class="icon-edit"></i>Edit Listing</a></li>
                                         <li><a href="<?=base_url($listing->slug.'?ref=my+listings');?>"><i class="icon-info-sign"></i>View Details</a></li>
                                         <li class="alert alert-danger"><a href="<?=base_url('add?action=delete&item='.$listing->slug.'&auth='.md5(random_string('alnum', 8)));?>"><i class="icon-trash"></i> Delete </a></li>
+                                        <?php if($listing->status !== 3):?>
+                                        <li> <li class="alert alert-danger">Inactive</li>
+                                        <?php endif;?>
                                     </ul>
                                     <!-- end short list -->
                                 </div>

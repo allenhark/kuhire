@@ -20,6 +20,87 @@ class Automation extends CI_Controller {
         endif;
     }
     
+    function thumbnail_index ()
+    {
+        $dir = './images/';
+
+        $files2 = scandir($dir, 1);
+        echo "<pre>";
+        foreach ($files2 as $key):
+            //Insert thumbs into db for indexing
+            $this->db->where('image', $key);
+            $data = $this->db->get('thumbs');
+            
+            if($data->num_rows () === 0):
+                $info['image'] = $key;
+                $this->db->insert('thumbs', $info);
+            else:
+                continue;
+            endif;
+        endforeach;
+    }
+    
+    function rebuild_thumbs ()
+    {
+        $this->db->where('thumbnailed', 0);
+        $data = $this->db->get('thumbs');
+        
+        if($data -> num_rows () !== 0):
+            require_once APPPATH . 'libraries/thumb/ThumbLib.inc.php';
+            //start loop
+            $i=0;
+            
+               
+                   $max_count = 5;
+                    $counter = 0;
+                    foreach ($data -> result () as $key) {
+                    $file_path = './images/'.$key->image;
+                    $file_name = $key->image;
+
+                    $thumb = PhpThumbFactory::create($file_path);
+
+                    //$thumb = PhpThumbFactory::create('test.jpg');
+                    $thumb->resize(221, 147)->save('./images/thumbnails/' . $file_name);
+
+                    //update db
+                    $info['thumbnailed'] = 1;
+                    $this->db->where('id', $key->id);
+                    $this->db->update('thumbs', $info);
+                        if($counter == $max_count){
+                            break;
+                        }
+                        $counter++;
+                    } 
+                    
+                    unset($counter);
+                    
+//                    for($counter=0;$counter<6;$counter++){
+//                        foreach ($data -> result () as $key):
+//                        echo 'guy '.$counter;
+////                    $file_path = './images/'.$key->image;
+////                    $file_name = $key->image;
+////
+////                    $thumb = PhpThumbFactory::create($file_path);
+////
+////                    //$thumb = PhpThumbFactory::create('test.jpg');
+////                    $thumb->resize(221, 147)->save('./images/thumbnails/' . $file_name);
+////
+////                    //update db
+////                    $info['thumbnailed'] = 1;
+////                    $this->db->where('id', $key->id);
+////                    $this->db->update('thumbs', $info);
+////                    return true;
+//                        endforeach;
+//                    }
+                   
+            
+                       
+
+        else:
+            echo 'We are done';
+        endif;
+    }
+    
     function search ()
     {
         $this->db->where('s_term', '');

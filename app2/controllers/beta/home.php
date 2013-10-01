@@ -8,7 +8,7 @@ class Home extends CI_Controller {
         /*
          * Uncoment to remake thumbnails
          */
-        //$this->data->thumbnailer ();
+       // $this->data->thumbnailer ();
     }
 
     public function index() {
@@ -462,7 +462,7 @@ class Home extends CI_Controller {
             $edit = FALSE;
         endif;
 
-        $this->form_validation->set_rules('name', 'Item Name', 'trim|required|min_length[3]|max_length[60]');
+        $this->form_validation->set_rules('name', 'Item Name', 'trim|required|min_length[3]');
 
         if ($this->form_validation->run() == FALSE) {
 
@@ -524,8 +524,19 @@ class Home extends CI_Controller {
 
                 $image = $image_data['file_name'];
 
-            endif;
+                //Reactivate thumbnail due to editing
+            if($edit & $_POST['default_image'] !==  'default.png'):
+                $file_name = $_POST['default_image'];
+                $file_path = './images/'.$_POST['default_image'];
+                $this->data->create_thumbnail($file_name, $file_path);
 
+                $image = $image_data['file_name'];
+            endif;
+            
+            endif;
+            
+            
+                
             /* Compute Location */
 
             $data['location'] = $_POST['location'];

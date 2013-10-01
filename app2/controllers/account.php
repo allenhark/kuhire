@@ -77,7 +77,40 @@ class Account extends CI_Controller {
     
     function listings ()
     {
+        $config['base_url'] = base_url('account/?');
+        $config['total_rows'] = $this->count();
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_link'] = 'First';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['last_link'] = 'Last';
+        $config['next_tag_open'] = '<li class="paginate_enabled_next">';
+        $config['next_tag_close'] = '</li>';
+        $config['num_tag_open'] = '<li class="paginate_button">';
+        $config['num_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li class="paginate_enabled_previous">';
+        $config['prev_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active paginate_active"> <a href="#" >';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['enable_query_strings'] = TRUE;
+        $config['page_query_string'] = TRUE;
+        $config['query_string_segment'] = 'page';
+        $config['num_links'] = 5;
+
+
+        $config['per_page'] = 5;
+
+        $this->pagination->initialize($config);
+        
         $this->db->where('item_owner', $this->session->userdata('user_id'));
+        
+        if (isset($_GET['page'])):
+            $this->db->limit(10, $_GET['page']);
+        else:
+            $this->db->limit(10, 0);
+        endif;
+        
         $data = $this->db->get('item');
         
         /*
@@ -92,8 +125,16 @@ class Account extends CI_Controller {
         return $data;
         
     }
-
-
+    
+    function count ()
+    {
+        $this->db->where('item_owner', $this->session->userdata('user_id'));
+       
+        $data = $this->db->get('item');
+        
+        return $data->num_rows ();
+    }
+    
     function mark_as_read()
     {
         if(isset($_GET['inbox'])):

@@ -15,6 +15,90 @@ Author URI:
 @import url(responsive-slider.css);
 @import url(theme.css);
 
+.home-block {
+    text-align: left;
+    margin-top: 220px;
+    min-height: 80px;
+    min-width: 100xp;
+    background-image: url(http://img.img-erento.com/images/66problack.png);
+    color: white;
+    width: auto;
+    height: auto;
+    text-align: center;
+    
+    
+}
+
+.home-block h2 {
+    color: white;
+    text-decoration: bold;
+    font-size: 20px;
+}
+
+.home-block a {
+    color: white;
+    font-size: 14px;
+}
+
+.home-block a:hover {
+    color: #D15503;
+}
+
+.home-block .home-listing {
+    float: left;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 0px;
+}
+
+.home-d {
+    margin-left: -30px;
+}
+
+.home-ul{
+    float:right;
+    position:relative;
+    left:-50%;
+    text-align:left;
+}
+.home-ul ul{
+    text-align: center;
+    position:relative;
+    left:50%;
+}
+
+.home-ul li{
+    display: block;
+    float: right;
+    margin: 0px 5px 0px 0px;
+    padding: 0px;
+    list-style: none outside none;
+}/* ie needs position:relative here*/
+
+
+    
+    .home-listing h5 {
+        color: black;
+        text-decoration: bold;
+        font-size: 16px;
+        font-family: Myriad Pro;
+    }
+    
+    .fixed-height {
+        min-height: 300px;
+        padding-right: 10px;
+    }
+    .shadow {
+    -webkit-box-shadow: 0 0 12px rgba(0, 0, 0, 0.13), 0 0 0 1px #D8D8D8 inset;
+    -moz-box-shadow: 0 0 12px rgba(0, 0, 0, 0.13), 0 0 0 1px #D8D8D8 inset;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.13), 0 0 0 1px #D8D8D8 inset;
+    transition: all 0.2s linear 0s;
+    padding-left: 15px;
+    padding-top: 25px;
+    min-height: 400px;
+    height: auto;
+}
+    
 /*
  * ===========================================
  * original filename: style.css
